@@ -1,0 +1,43 @@
+Protocol
+
+Record Separator Characters (RS) ASCII 30, HEX 1E not allowed.
+
++ Client Hello
+  - 4 Bytes: int with the message number: 1 for hello
+  - RS
+  - up to 16 bytes: Name (does not need to be unique)
+    + What happens when someone with the same name is already connected?
+    + Will I need to pad the names with zeroes.
++ Server Hello Response
+  - 4 bytes: message type: 2 server hello
+  - 4 bytes: size of the message to follow.
+  - <variable bytes>: <name>RS<name>
++ Ready to Play
+  - 4 bytes: message type: 4 for ready
+  - 16 bytes: uuid of user
++ Ready to play response
+  - 4 bytes: message type: 5 for ready response.
++ Game starting Message
+  - 4 bytes: message type 6
+  - RS
+  - 8 bytes: long. unix timestamp
+  - Denotes when the game is going to start.
+  - Client will countdown until then.
+  - Game will last a specified amount of seconds. Maybe 120?
++ Client plays the game
++ Report score.
+  - 4 bytes: message type: 7
+  - RS
+  - 4 bytes: score.
++ Report score response.
+  - 4 bytes: message type: 8
+  - RS
+  - up to 16 bytes: Name of winner
+  - RS
+  - 4 bytes: winner score.
++ Client disconnect
+  - 4 bytes: message type: 9
+  - RS
+  - uuid?
++ Exit Response
+  - 4 bytes: 10
